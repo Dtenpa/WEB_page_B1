@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Omikuji</title>
+    <style>
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .omikuji-title {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            font-weight: normal;
+            letter-spacing: 2px;
+        }
+
+        .omikuji-result {
+            font-size: 3em;
+            font-weight: normal;
+            margin: 30px auto;
+            width: 200px;
+            height: 200px;
+            line-height: 200px;
+            border: 3px solid #333;
+            color: #333;
+            display: inline-block;
+            text-align: center;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .omikuji-result.hidden {
+            opacity: 0;
+            transform: scale(0.5);
+        }
+
+        .omikuji-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 1.2em;
+            background: #fff; 
+            color: #333; 
+            text-transform: uppercase;
+            cursor: pointer;
+            border: 2px solid #333;
+            border-radius: 5px;
+            transition: all 0.3s ease, transform 0.2s;
+        }
+
+        .omikuji-button:hover {
+            background: #333;
+            color: #fff; 
+            transform: scale(1.1);
+        }
+
+        body {
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+            font-family: 'Helvetica', 'Arial', sans-serif;
+            background-color: #fff;
+            color: #000;
+            line-height: 1.6;
+            flex-direction: column;
+        }
+
+        header {
+            text-align: center;
+            padding: 20px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            font-weight: normal;
+            letter-spacing: 2px;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 20px 0;
+        }
+
+        nav a {
+            text-decoration: none;
+            font-size: 1em;
+            color: #000;
+            position: relative;
+        }
+
+        nav a::after {
+            content: '';
+            display: block;
+            width: 0;
+            height: 2px;
+            background: #000;
+            transition: width 0.3s;
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="cursor" id="cursor">
+        <div id="progress-bar" class="progress-bar">
+            <div id="progress" class="progress"></div>
+        </div>
+    </div>
+    <header>
+        <h1 id="animated-text">WEB PAGE B</h1>
+        <nav>
+            <a href="index.html">HOME</a>
+            <a href="product1.html">OMIKUJI</a>
+            <a href="product2.html">ANIMATION GAME</a>
+        </nav>
+    </header>
+    <h1 class="omikuji-title fade-in">Omikuji</h1>
+    <div id="omikuji-result" class="omikuji-result hidden fade-in">?</div>
+    <button id="omikuji-button" class="omikuji-button fade-in">Draw Omikuji</button>
+    <footer class="fade-in">
+        <p>Omikuji App</p>
+    </footer>
+
+    <script>
+        (function () {
+            const results = ['大吉', '中吉', '小吉', '吉', '凶'];
+            const resultBox = document.getElementById('omikuji-result');
+            const drawButton = document.getElementById('omikuji-button');
+
+            drawButton.addEventListener('click', function () {
+                drawButton.disabled = true;
+                resultBox.classList.add('hidden');
+
+                setTimeout(() => {
+                    const randomIndex = Math.floor(Math.random() * results.length);
+                    const fortune = results[randomIndex];
+                    resultBox.textContent = fortune;
+                    resultBox.classList.remove('hidden');
+                }, 500);
+
+                setTimeout(() => {
+                    drawButton.disabled = false;
+                }, 1000);
+            });
+        })();
+
+        window.addEventListener('load', () => {
+            const fadeElements = document.querySelectorAll('.fade-in');
+            fadeElements.forEach((element, index) => {
+                setTimeout(() => {
+                    element.classList.add('visible');
+                }, index * 200);
+            });
+        });
+        const cursor = document.getElementById('cursor');
+        const progressBar = document.getElementById('progress-bar');
+        const progress = document.getElementById('progress');
+
+        let mouseX = 0, mouseY = 0;
+        let cursorX = 0, cursorY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+        const cursor = document.getElementById('cursor');
+        const progressBar = document.getElementById('progress-bar');
+        const progress = document.getElementById('progress');
+
+        const mouseX = e.clientX;
+        const mouseY = e.clientY;
+
+        cursor.style.left = `${mouseX - cursor.offsetWidth / 2}px`;
+        cursor.style.top = `${mouseY - cursor.offsetHeight / 2}px`;
+
+        progressBar.style.left = `${mouseX - progressBar.offsetWidth / 2}px`;
+        progressBar.style.top = `${mouseY - progressBar.offsetHeight / 2}px`;
+
+        
+    });
+    document.addEventListener('DOMContentLoaded', () => {
+      const textElement = document.getElementById('animated-text');
+      const texts = ['WEB PAGE B', 'EXPERIMENTAL WEB PAGE'];
+      let currentIndex = 0;
+
+      setInterval(() => {
+        currentIndex = (currentIndex + 1) % texts.length;
+        textElement.textContent = texts[currentIndex];
+      }, 5000); //5秒で切り替え
+    });
+    </script>
+</body>
+</html>
+
+

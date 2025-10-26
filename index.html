@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>index</title>
+    <link rel="stylesheet" href="css/default.css">
+</head>
+<body>
+    <div class="cursor" id="cursor">
+        <div id="progress-bar" class="progress-bar">
+            <div id="progress" class="progress"></div>
+        </div>
+    </div>
+    <header>
+        <div>
+            <h1 id="animated-text">WEB PAGE B</h1>
+            
+        </div>
+            <nav>
+                <a href="index.html">HOME</a>
+                <a href="product1.html">OMIKUJI</a>
+                <a href="product2.html">ANIMATION GAME</a>
+            </nav>
+    </header>
+    
+    <section class="hero fade-in">
+        
+        <h2 class="fade-in hover-zoom">Web Page B</h2>
+        <p>ASU</p>
+        <p>35°09'26"N 137°01'53"W</p>
+        <p id="timestamp">...</p>
+    </section>
+
+    <section class="content fade-in">
+        <h2>About Me</h2>
+        <p>My name is Daichi Fujihara, a junior in the Faculty of Human Information Sciences. I created my final creation.</p>
+    </section>
+
+    <footer class="fade-in">
+        <p>2024 | 2025</p>
+    </footer>
+
+    <script>
+        // 全てのフェードイン要素を取得
+        const fadeElements = document.querySelectorAll('.fade-in');
+
+        // ページロード時にアニメーションを適用
+        window.addEventListener('load', () => {
+            fadeElements.forEach((element, index) => {
+                setTimeout(() => {
+                    element.classList.add('visible');
+                }, index * 200); // 各要素のアニメーションを少しずつ遅延
+            });
+        });
+
+        const cursor = document.getElementById('cursor');
+        const progressBar = document.getElementById('progress-bar');
+        const progress = document.getElementById('progress');
+
+        let mouseX = 0, mouseY = 0;
+        let cursorX = 0, cursorY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+        const cursor = document.getElementById('cursor');
+        const progressBar = document.getElementById('progress-bar');
+        const progress = document.getElementById('progress');
+
+        const mouseX = e.clientX;
+        const mouseY = e.clientY;
+
+        cursor.style.left = `${mouseX - cursor.offsetWidth / 2}px`;
+        cursor.style.top = `${mouseY - cursor.offsetHeight / 2}px`;
+
+        progressBar.style.left = `${mouseX - progressBar.offsetWidth / 2}px`;
+        progressBar.style.top = `${mouseY - progressBar.offsetHeight / 2}px`;
+
+    
+        });
+
+        // 現在時刻を表示する関数
+        function updateTime() {
+            const now = new Date();
+            const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            document.getElementById('timestamp').textContent = ` ${hours}:${minutes}:${seconds}`;
+        }
+
+        // 1秒ごとに現在時刻を更新
+        setInterval(updateTime, 1000);
+
+        document.addEventListener('DOMContentLoaded', () => {
+      const textElement = document.getElementById('animated-text');
+      const texts = ['WEB PAGE B', 'EXPERIMENTAL WEB PAGE'];
+      let currentIndex = 0;
+
+      setInterval(() => {
+        currentIndex = (currentIndex + 1) % texts.length;
+        textElement.textContent = texts[currentIndex];
+      }, 5000); //5秒で切り替え
+    });
+    </script>
+
+
+ 
+</body>
+</html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animation</title>
+    <link rel="stylesheet" href="css/default.css">
+ 
+</head>
+<body>
+    <div class="cursor" id="cursor">
+        <div id="progress-bar" class="progress-bar">
+            <div id="progress" class="progress"></div>
+        </div>
+    </div>
+<header>
+    <h1 id="animated-text">WEB PAGE B</h1>
+    <nav>
+        <a href="index.html">HOME</a> 
+        <a href="product1.html">OMIKUJI</a>
+        <a href="product2.html">ANIMATION GAME</a>
+    </nav>
+</header>
+
+<section class="hero fade-in">
+    <canvas id="canvas" width="800" height="600" class="fade-in" ></canvas>
+</section>
+
+<footer class="fade-in">
+    <p>2024 | 2025</p>
+</footer>
+
+<script>
+    let canvas, context;
+    const balls = [];
+
+    function initializeCanvas() {
+        canvas = document.getElementById('canvas');
+        context = canvas.getContext('2d');
+
+        // 初期の黒い球を1つ追加
+        balls.push(createBall());
+
+        // アニメーション開始
+        setInterval(animateBalls, 10);
+
+        // クリック時に新しい球を追加
+        canvas.addEventListener('click', function(event) {
+            const rect = canvas.getBoundingClientRect();
+            const x = event.clientX - rect.left;
+            const y = event.clientY - rect.top;
+            balls.push(createBall(x, y));
+        });
+    }
+
+    function createBall(x = Math.random() * canvas.width, y = Math.random() * canvas.height) {
+        return {
+            x: x,
+            y: y,
+            r: 10,
+            dx: Math.random() > 0.5 ? 2 : -2,
+            dy: Math.random() > 0.5 ? 2 : -2
+        };
+    }
+
+    function animateBalls() {
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        balls.forEach(ball => {
+            context.beginPath();
+            context.arc(ball.x, ball.y, ball.r, 0, Math.PI * 2);
+            context.fillStyle = "black"; // ボールの色を設定
+            context.fill();
+            context.closePath();
+
+            // X方向の移動
+            ball.x += ball.dx;
+            if (ball.x > canvas.width - ball.r || ball.x < ball.r) {
+                ball.dx *= -1;
+            }
+
+            // Y方向の移動
+            ball.y += ball.dy;
+            if (ball.y > canvas.height - ball.r || ball.y < ball.r) {
+                ball.dy *= -1;
+            }
+        });
+    }
+
+    // フェードインアニメーション
+    function applyFadeIn() {
+        const fadeElements = document.querySelectorAll('.fade-in');
+        fadeElements.forEach((element, index) => {
+            setTimeout(() => {
+                element.classList.add('visible');
+            }, index * 200); // 各要素のアニメーションを少しずつ遅延
+        });
+    }
+
+    // ページロード時に初期化処理
+    window.onload = () => {
+        initializeCanvas();
+        applyFadeIn();
+    };
+    const cursor = document.getElementById('cursor');
+        const progressBar = document.getElementById('progress-bar');
+        const progress = document.getElementById('progress');
+
+        let mouseX = 0, mouseY = 0;
+        let cursorX = 0, cursorY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+    const cursor = document.getElementById('cursor');
+    const progressBar = document.getElementById('progress-bar');
+    const progress = document.getElementById('progress');
+
+    const mouseX = e.clientX;
+    const mouseY = e.clientY;
+
+    cursor.style.left = `${mouseX - cursor.offsetWidth / 2}px`;
+    cursor.style.top = `${mouseY - cursor.offsetHeight / 2}px`;
+
+    progressBar.style.left = `${mouseX - progressBar.offsetWidth / 2}px`;
+    progressBar.style.top = `${mouseY - progressBar.offsetHeight / 2}px`;
+
+    
+});
+document.addEventListener('DOMContentLoaded', () => {
+      const textElement = document.getElementById('animated-text');
+      const texts = ['WEB PAGE B', 'EXPERIMENTAL WEB PAGE'];
+      let currentIndex = 0;
+
+      setInterval(() => {
+        currentIndex = (currentIndex + 1) % texts.length;
+        textElement.textContent = texts[currentIndex];
+      }, 5000); //5秒で切り替え
+    });
+</script>
+</body>
+</html>
+
